@@ -10,7 +10,6 @@ file_line { 'Turn_off_passwd_auth':
   line    => 'PasswordAuthentication no',
 }
 file { '~/.ssh/config':
-  ensure  => present,
   path    => '~/.ssh/config',
   mode    => '0744',
   owner   => 'www-data',
