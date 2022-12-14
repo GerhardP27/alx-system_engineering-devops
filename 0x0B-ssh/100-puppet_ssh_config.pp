@@ -1,18 +1,16 @@
-#!/usr/bin/env bash
-# Creates an ssh config file to bypass passphrase
-file_line { 'Declare_identity_file':
-  path    => '/etc/ssh/ssh_config',
-  line    => 'IdentityFile ~/.ssh/school',
+# Setting up my client config file
+include stdlib
+
+file_line { 'Turn off passwd auth':
+  ensure => present,
+  path   => '/etc/ssh/ssh_config',
+  line   => '    PasswordAuthentication no',
+  replace => true,
 }
 
-file_line { 'Turn_off_passwd_auth':
-  path    => '/etc/ssh/ssh_config',
-  line    => 'PasswordAuthentication no',
-}
-file { '~/.ssh/config':
-  path    => '~/.ssh/config',
-  mode    => '0744',
-  owner   => 'www-data',
-  group   => 'www-data',
-  content => "Host *   PasswordAuthentication no\n    IdentityFile ~/.ssh/school\n    SendEnv LANG LC_*\n    HashKnownHosts yes\n    GSSAPIAuthentication yes\n    GSSAPIDelegateCredentials no"
+file_line { 'Delare identity file':
+  ensure => present,
+  path   => '/etc/ssh/ssh_config',
+  line   => '     IdentityFile ~/.ssh/school',
+  replace => true,
 }
